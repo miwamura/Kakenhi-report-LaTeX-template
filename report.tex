@@ -116,7 +116,7 @@ MSゴシックのフォントファイル(msgothic.ttc)が無いとコンパイ�
 # pdfuplatex report.tex
 \end{verbatim}
 の要領でコンパイルしてください。
-その影響(？)で、日本語の参考文献には
+その影響(？)で、bibファイル中の日本語の参考文献には
 \begin{verbatim}
   langid = {Japanese},
 \end{verbatim}
@@ -127,7 +127,10 @@ MSゴシックのフォントファイル(msgothic.ttc)が無いとコンパイ�
 
 \subsection{縦横の文字数を数えるためのテストパターン}
 多分使わなくても良いと思いますが、Word版と文字数、行数を比較するときには、dummy.texを読み込んでください。
-%% \input{dummy.tex}
+\begin{verbatim}
+\input{dummy.tex}
+\end{verbatim}
+の要領です。
 
 \printbibliography[title=参考文献]
 
