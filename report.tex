@@ -1,0 +1,134 @@
+\RequirePackage{plautopatch}
+\documentclass[uplatex,dvipdfmx,11pt]{jsarticle}
+
+% 余白設定
+\usepackage[top=15truemm,bottom=15truemm,left=30truemm,right=30truemm]{geometry}
+
+% MSフォントを指定
+% https://qiita.com/zr_tex8r/items/a13c195d42b7fca69378
+\usepackage[ms]{pxchfon}
+
+% 1行当たりの文字数、ページ当たりの行数の指定
+% https://rion778.hatenablog.com/entry/20091002/1254482262
+\makeatletter
+\def\mojiparline#1{
+    \newcounter{mpl}
+    \setcounter{mpl}{#1}
+    \@tempdima=\linewidth
+    \advance\@tempdima by-\value{mpl}zw
+    \addtocounter{mpl}{-1}
+    \divide\@tempdima by \value{mpl}
+    \advance\kanjiskip by\@tempdima
+    \advance\parindent by\@tempdima
+}
+\makeatother
+\def\linesparpage#1{
+    \baselineskip=\textheight
+    \divide\baselineskip by #1
+}
+
+% 参考文献
+\usepackage[maxnames=5,sortlocale=ja_JP]{biblatex}
+\addbibresource{index.bib}
+
+%% % 日本語文献で最終著者の前にandが入らないようにするため
+% https://gist.github.com/idiotWu/4879a88a3e34618cc8215a43ba2e9fbd
+\input{u-jap}
+
+% カウンターの出力を全角数字にする方法
+% https://oku.edu.mie-u.ac.jp/tex/mod/forum/discuss.php?d=58
+\makeatletter
+\def\@zenkakusuuji#1{%
+\ifcase#1 ０\or １\or ２\or ３\or ４\or ５\or ６\or ７\or ８\or ９\else\relax\fi%
+}%
+\def\zenkakusuujihenkan#1{%
+\edef\temp{#1}%
+\let\@zenkaku=\empty%
+\expandafter\@tfor\expandafter\@singlenumber\expandafter:\expandafter=\temp\do{%
+\let\@tmpzenkaku=\@zenkaku%
+\edef\@zenkaku{\@tmpzenkaku\@zenkakusuuji\@singlenumber}%
+}%
+\@zenkaku%
+}%
+\newcounter{bangou}%
+\setcounter{bangou}{1}%
+\makeatother
+
+
+% sectionの文字サイズ変更
+\usepackage{titlesec}
+\titleformat{\section}{}{\zenkakusuujihenkan{\thesection}．}{0zw}{}
+\titlespacing{\section}{0zw}{1zw}{0zw}
+\titleformat{\subsection}{}{\zenkakusuujihenkan{\thesection}．\zenkakusuujihenkan{\arabic{subsection}}}{1zw}{}
+\titlespacing{\subsection}{0zw}{0zw}{0zw}
+\titleformat{\subsubsection}{}{\zenkakusuujihenkan{\thesection}．\zenkakusuujihenkan{\arabic{subsection}}．\zenkakusuujihenkan{\arabic{subsubsection}}}{1zw}{}
+\titlespacing{\subsubsection}{0zw}{0zw}{0zw}
+
+% ページ番号を消す
+\pagestyle{empty}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+% 一行あたり文字数の指定
+\mojiparline{43}
+% 1ページあたり行数の指定
+\linesparpage{63}
+
+% 段落最初の字下げ
+\parindent = 1zw
+
+\noindent
+様　式　Ｃ－１９、Ｆ－１９－１、Ｚ－１９（共通）\\ \\
+
+\section{研究開始当初の背景}
+
+\section{研究の目的}
+
+\section{研究の方法}
+
+\section{研究成果}
+
+------------------------------------------------------------
+
+↑Word版のテンプレートと同じ記載内容
+
+------------------------------------------------------------
+
+\section{簡単な説明}
+
+\subsection{フォント}
+
+Word版と同じ見た目にするために、フォントはMS明朝を使用します。
+msmincho.ttc というファイルをLaTeXから見える位置(例えば、ソースのディレクトリ)に置いてください。
+MSゴシックのフォントファイル(msgothic.ttc)が無いとコンパイル時に怒られるようなのですが、使っていなかったら実害は無いみたいです。
+
+\subsection{参考文献}
+
+参考文献の例です~\cite{dummy_ref1, dummy_ref2}。
+
+なんとなく、参考文献にはBibLaTeXを使っています。
+そのため、コンパイル時は
+\begin{verbatim}
+# pdfuplatex report.tex
+# biber report
+# pdfuplatex report.tex
+# pdfuplatex report.tex
+\end{verbatim}
+の要領でコンパイルしてください。
+その影響(？)で、日本語の参考文献には
+\begin{verbatim}
+  langid = {Japanese},
+\end{verbatim}
+を入れないと、最終著者の前にandが入ります。
+
+まあ、BibTeXに変更してもらっても良いと思います。
+
+
+\subsection{縦横の文字数を数えるためのテストパターン}
+多分使わなくても良いと思いますが、Word版と文字数、行数を比較するときには、dummy.texを読み込んでください。
+%% \input{dummy.tex}
+
+\printbibliography[title=参考文献]
+
+\end{document}

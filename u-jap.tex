@@ -1,0 +1,25 @@
+% 日本語文献サポート
+\AtEveryBibitem{
+  % langid={Japanese} で識別
+  \iffieldequalstr{langid}{Japanese} {
+    % コンマで区切り
+    \DeclareDelimFormat{finalnamedelim}{%
+      \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
+      \addspace\multinamedelim
+    }
+    %% % 名前を「姓 名」の順に
+    %% \DeclareNameFormat{default}{%
+    %%   \usebibmacro{name:delim}{\namepartfamily\namepartgiven}%
+    %%   \usebibmacro{name:hook}{\namepartfamily\namepartgiven}%
+    %%   \namepartfamily\bibnamedelimc\namepartgiven%
+    %%   \usebibmacro{name:andothers}
+    %% }
+    % 年月日に参照
+    %% \DeclareFieldFormat{urldate}{%
+    %%   （\thefield{urlyear}-\thefield{urlmonth}-\thefield{urlday}~に参照\isdot）
+    %% }
+    % カギカッコでタイトルを囲む
+    %% \DeclareFieldFormat*{title}{「#1」}
+    %% \DeclareFieldFormat[book]{title}{『#1』}
+  }{}
+}
