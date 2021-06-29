@@ -32,3 +32,11 @@ MSゴシックのフォントファイル(msgothic.ttc)が無いとコンパイ�
 \input{dummy.tex}
 ```
 の要領です。
+
+### Known Issue
+WordとLaTeXで改行ルールがちょっと違うようで、同じ文章でも、WordとLaTeXで行数が変わってきます。
+でも、まあ、普通はこの差に気づかないと思うので、問題無いと思っています。
+
+### 使用実績
+[この研究課題](https://kaken.nii.ac.jp/ja/grant/KAKENHI-PROJECT-17H01803/)の報告書で使いましたが、何も言われませんでした。
+多分、Wordでは無いとバレてないと思います。 :-)
